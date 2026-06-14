@@ -1,7 +1,7 @@
 # IA_generativa
 IA generativa orientado al analisis de datos e Inteligencia de Negocios
 
-![image](https://github.com/presentaciones/IA_generativa.png)
+![image](https://github.com/jcromerohdz/IA_generativa/blob/main/presentaciones/IA_generica.png)
 
 # Contenido
 1. Configuración de equipo
