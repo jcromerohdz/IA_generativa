@@ -11,4 +11,4 @@
 
 # Configuración de equipo
 - Visita la [Sitio oficial lenguaje de programación Python](https://www.python.org/) para más detalles.
-- Visita la [Descarga de miniconda](https://www.anaconda.com/download) para más detalles.
+- Visita la [Sitio de Descarga de miniconda](https://www.anaconda.com/download) para más detalles.
