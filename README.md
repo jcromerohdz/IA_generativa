@@ -31,4 +31,4 @@ Regresar al Directorio Anterior
 cd ..
 ```
 
-2. Introducción a la programación con python [link](https://github.com/jcromerohdz/IA_generativa/blob/main/codigo/Python_intro.ipynb)
+2. Introducción a la programación con python [link](https://github.com/jcromerohdz/IA_generativa/blob/main/codigo/Python_Intro.ipynb)
