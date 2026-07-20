@@ -1,0 +1,40 @@
+{% extends 'materials/base.html' %}
+
+{% block title %}Modelos de Producción - SCM{% endblock %}
+
+{% block content %}
+<div class="row mb-4 align-items-center">
+    <div class="col">
+        <h1 class="h3 text-secondary m-0">Modelos de Televisores en Producción</h1>
+        <p class="text-muted small m-0">Seleccione un modelo para auditar su Lista de Materiales (BOM) crítica.</p>
+    </div>
+</div>
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for product in products %}
+    <div class="col">
+        <div class="card h-100 shadow-sm border-0 border-top border-dark border-3">
+            <div class="card-body d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <span class="badge bg-secondary font-monospace">{{ product.sku }}</span>
+                    <small class="text-muted">{{ product.created_at|date:"d/M/Y" }}</small>
+                </div>
+                <h5 class="card-title fw-bold text-dark">{{ product.name }}</h5>
+                <p class="card-text text-muted flex-grow-1 small">
+                    {% if product.description %}{{ product.description }}{% else %}Sin descripción técnica registrada.{% endif %}
+                </p>
+                <div class="mt-3">
+                    <a href="{% url 'materials:product_detail' product.pk %}" class="btn btn-outline-dark btn-sm w-100">
+                        Ver Estructura de BOM →
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12 text-center py-5">
+        <div class="alert alert-info shadow-sm">No hay modelos de televisión dados de alta en el sistema de producción.</div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

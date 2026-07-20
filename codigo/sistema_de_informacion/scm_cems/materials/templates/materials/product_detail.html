@@ -1,0 +1,80 @@
+{% extends 'materials/base.html' %}
+
+{% block title %}{{ product.sku }} - Detalle de BOM{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'materials:product_list' %}" class="text-dark">Inicio</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ product.sku }}</li>
+    </ol>
+</nav>
+
+<div class="card shadow-sm border-0 p-4 mb-4 bg-white">
+    <div class="row">
+        <div class="col-md-8">
+            <span class="text-uppercase text-muted font-monospace small">Especificación de Producto</span>
+            <h2 class="fw-bold text-dark mb-2">{{ product.name }}</h2>
+            <p class="text-muted">{{ product.description }}</p>
+        </div>
+        <div class="col-md-4 text-md-end border-start-md">
+            <div class="p-2 bg-light rounded text-center">
+                <span class="d-block text-muted small text-uppercase">Identificador Master</span>
+                <span class="fs-4 fw-bold font-monospace text-dark">{{ product.sku }}</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h3 class="h4 text-secondary mb-3">Estructura de la Lista de Materiales (BOM)</h3>
+<div class="card shadow-sm border-0 overflow-hidden">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-dark">
+                <tr>
+                    <th>Categoría</th>
+                    <th>No. Parte</th>
+                    <th>Nombre de Componente</th>
+                    <th class="text-center">Cant. Requerida</th>
+                    <th class="text-center">Stock Físico</th>
+                    <th class="text-center">Mínimo de Seguridad</th>
+                    <th>Estado de Disponibilidad</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in product.bom_relations.all %}
+                <tr {% if item.component.inventory.is_under_safety_stock %}class="table-danger-light" style="background-color: #fff0f1;"{% endif %}>
+                    <td>
+                        <span class="badge bg-secondary w-100">{{ item.component.get_category_display }}</span>
+                    </td>
+                    <td class="font-monospace fw-bold text-dark">{{ item.component.part_number }}</td>
+                    <td>{{ item.component.name }}</td>
+                    <td class="text-center fw-bold">{{ item.quantity }} pcs</td>
+                    <td class="text-center">{{ item.component.inventory.current_stock }}</td>
+                    <td class="text-center text-muted">{{ item.component.safety_stock }}</td>
+                    <td>
+                        {% if item.component.inventory.is_under_safety_stock %}
+                            <span class="badge bg-danger text-white p-2 d-block text-center">
+                                ⚠️ RIESGO PARO DE LÍNEA
+                            </span>
+                        {% else %}
+                            <span class="badge bg-success text-white p-2 d-block text-center">
+                                ✓ Abasto Conforme
+                            </span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" class="text-center py-4 text-muted">Este producto no cuenta con componentes asignados en su BOM.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="mt-4">
+    <a href="{% url 'materials:product_list' %}" class="btn btn-secondary">← Volver al Panel Base</a>
+</div>
+{% endblock %}
